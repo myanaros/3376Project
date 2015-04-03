@@ -1,0 +1,137 @@
+(TJM note:
+
+To make life easier, I suggest we stick to some kind of shared
+convention for variable/function names and such. I don't have a horse in that
+race, so for lack of a better idea I'm proposing we use Google's C++ Style
+Guide for that:
+
+    https://google-styleguide.googlecode.com/svn/trunk/cppguide.html
+
+We really don't need the whole thing for a project of this scope, just the
+Naming subsection.
+
+Also, we really want to make sure everyone is using the same tab/space settings
+in vim. I've attached my .vimrc file if you just want to use it wholesale. At a
+minimum, everyone should have this part so that we don't wind up with a
+whitespace mess:
+
+# GNU whitespace settings for C/C++ code. This is more or less
+# the expected standard for *NIX source files.
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+# GNU make requires that leading whitespace Makefiles be tabs, not spaces.
+autocmd FileType make setlocal noexpandtab
+
+)
+
+=========================================================================
+General Algorithm
+=========================================================================
+
+Main will consist of:
+
+    * argument parsing
+    * object initalization 
+    * time loop that ticks down the minutes
+
+The primary loop should:
+
+    * check with BoolSource object for each queue; add a plane (or don't)
+      accordingly
+    * check if the runway is busy
+        - if not, repeatedly pull planes off the front of the queue until you
+          find one that hasn't crashed or you empty the queue. For each plane
+          pulled of the queue, update statkeeper about its queue time and fate.
+          If you found a non-crashed plane before emptying the queue, tell the
+          runway to land it (makes runway occupied)
+        - if the runway is still not busy (queue was empty or everything in the
+          queue was a crashed plane), then pull a plane off the takeoff queue.
+          Update statkeeper, etc.
+        
+
+=========================================================================
+Class Interfaces
+=========================================================================
+
+---------------------
+Airplane
+---------------------
+
+Member data:
+    start_time_         // time when plane entered its queue
+    crash_time_         // time when plane will run out of fuel
+
+Member functions:
+    start_time()        // accessor
+    get_start_time()    // mutator
+    crash_time()
+    get_crash_time()
+
+    hasCrashed()
+
+---------------------
+BoolSource
+---------------------
+
+Member data:
+    probability_        // probability of returning true
+
+Member functions:
+    probability()
+    set_probability()
+
+    shouldAddToQueue()  // decisions, decisions
+
+---------------------
+Queue
+---------------------
+
+Extending std::list<Airplane> will probably give us everything we need for this
+class.
+
+---------------------
+Runway
+---------------------
+
+(TJM note: we talked about having a tick() function here yesterday, but I just
+realized that we really don't need one. doLanding and doTakeoff can take an
+argument for the current time, and update busy_until_ accordingly.)
+
+Member data:
+    landing_duration_       // time needed for each landing
+    takeoff_duration_       // time needed for each takeoff
+    busy_until_             // minute that runway will become clear again
+                            // if this is greater than the current time,
+                            // the runway is clear (time ticks backwards...)
+
+Member functions:
+    landing_duration()
+    set_landing_duration()
+    takeoff_duration_()
+    set_takeoff_duration_()
+    busy_until()
+    set_busy_until()
+
+    isClear()
+    doLanding()
+    doTakeoff()
+
+---------------------
+StatKeeper
+---------------------
+
+Member data:
+    sim_time;           // total simulation time
+    takeoffs_;          // total number of takeoffs
+    landings_;          // total number of landings
+    crashes_;           // total number of crashes
+    takeoff_wait_time;  // total time spent by planes in takeoff queue
+    landing_wait_time;  // total time spent by planes in landing queue
+
+Member functions:
+    accessors/mutators for all of the above
+
+    printStats()
