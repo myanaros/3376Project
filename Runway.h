@@ -3,11 +3,11 @@
 
 class Runway {
     public:
-        int landing_duration();
+        int get_landing_duration();
         void set_landing_duration(int);
-        int takeoff_duration_();
+        int get_takeoff_duration_();
         void set_takeoff_duration_(int);
-        int busy_until();
+        int get_busy_until();
         void set_busy_until(int);
 
         bool isClear();

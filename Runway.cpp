@@ -3,17 +3,17 @@
 // Project includes
 #include "Runway.h"
 
-int Runway::landing_duration()
+int Runway::get_landing_duration()
 {
     return landing_duration_;
 }
 
-Runway::set_landing_duration(int landing_in)
+void Runway::set_landing_duration(int landing_in)
 {
     landing_duration_ = landing_in;
 }
 
-int Runway::takeoff_duration_()
+int Runway::get_takeoff_duration_()
 {
     return takeoff_duration_;
 }
@@ -23,7 +23,7 @@ void Runway::set_takeoff_duration_(int takeoff_in)
     takeoff_duration_ = takeoff_in;
 }
 
-int Runway::busy_until()
+int Runway::get_busy_until()
 {
     return busy_until_;
 }

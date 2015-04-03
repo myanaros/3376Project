@@ -34,7 +34,7 @@ General Algorithm
 Main will consist of:
 
     * argument parsing
-    * object initalization 
+    * object initalization
     * time loop that ticks down the minutes
 
 The primary loop should:
@@ -50,7 +50,7 @@ The primary loop should:
         - if the runway is still not busy (queue was empty or everything in the
           queue was a crashed plane), then pull a plane off the takeoff queue.
           Update statkeeper, etc.
-        
+
 
 =========================================================================
 Class Interfaces
@@ -108,11 +108,11 @@ Member data:
                             // the runway is clear (time ticks backwards...)
 
 Member functions:
-    landing_duration()
+    get_landing_duration()
     set_landing_duration()
-    takeoff_duration_()
+    get_takeoff_duration_()
     set_takeoff_duration_()
-    busy_until()
+    get_busy_until()
     set_busy_until()
 
     isClear()
