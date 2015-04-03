@@ -65,9 +65,9 @@ Member data:
     crash_time_         // time when plane will run out of fuel
 
 Member functions:
-    start_time()        // accessor
+    set_start_time()        // accessor
     get_start_time()    // mutator
-    crash_time()
+    set_crash_time()
     get_crash_time()
 
     hasCrashed()

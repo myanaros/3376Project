@@ -5,7 +5,7 @@
 #include "BoolSource.h"
 #include "Queue.h"
 #include "Runway.h"
-#include "Statkeeper.h"
+#include "StatKeeper.h"
 
 int main(int argc, char **argv) {
     return 0;
