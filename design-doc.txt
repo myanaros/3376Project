@@ -42,11 +42,11 @@ The primary loop should:
     * check with BoolSource object for each queue; add a plane (or don't)
       accordingly
     * check if the runway is busy
-        - if not, repeatedly pull planes off the front of the queue until you
-          find one that hasn't crashed or you empty the queue. For each plane
-          pulled of the queue, update statkeeper about its queue time and fate.
-          If you found a non-crashed plane before emptying the queue, tell the
-          runway to land it (makes runway occupied)
+        - if not, repeatedly pull planes off the front of the landing queue
+          until you find one that hasn't crashed or you empty the queue. For
+          each plane pulled of the queue, update statkeeper about its queue
+          time and fate.  If you found a non-crashed plane before emptying the
+          queue, tell the runway to land it (makes runway occupied)
         - if the runway is still not busy (queue was empty or everything in the
           queue was a crashed plane), then pull a plane off the takeoff queue.
           Update statkeeper, etc.
