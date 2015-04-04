@@ -1,7 +1,9 @@
 #ifndef __CS3376_QUEUE_H__
 #define __CS3376_QUEUE_H__
 
-class Queue {
+#include <list>
+
+class Queue : public std::list<Airplane> {
     private:
     public:
 };
