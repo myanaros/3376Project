@@ -20,10 +20,10 @@ class StatKeeper {
 		int get_total_landings();
 		int get_total_crashes();
 		int get_average_takeoff();
-		int get_average_langing();
+		int get_average_landing();
 
 	//Class mutator methods.
-		int set_total_time(int);
+		int set_total_time(int, int);
 		int set_total_takeoffs(int);
 		int set_total_landings(int);
 		int set_total_crashes(int);
