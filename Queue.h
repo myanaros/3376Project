@@ -3,6 +3,8 @@
 
 #include <list>
 
+#include "Airplane.h"
+
 class Queue : public std::list<Airplane> {
     private:
     public:
