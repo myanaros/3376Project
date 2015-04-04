@@ -62,43 +62,31 @@ int StatKeeper::get_average_landing()
 
 
 //Sets the total amount of time for simulation.
-int StatKeeper::set_total_time(int begin, int end)
-{	
-	int a = 0;
-	return a;
+void StatKeeper::set_total_time(int begin, int end)
+{
 }
 
 //Sets the total amount of takeoffs.
-int StatKeeper::set_total_takeoffs(int takeoff_count_)
+void StatKeeper::set_total_takeoffs(int takeoff_count_)
 {
-	int a = 0;
-	return a;
 }
 
 //Sets the total amount of landings.
-int StatKeeper::set_total_landings(int land_count_)
+void StatKeeper::set_total_landings(int land_count_)
 {
-	int a = 0;
-	return a;
 }
 
 //Sets the total amount of flights crashing.
-int StatKeeper::set_total_crashes(int crash_count_)
+void StatKeeper::set_total_crashes(int crash_count_)
 {
-	int a = 0;
-	return a;
 }
 
 //Sets the avaerage time it took for takeoff.
-int StatKeeper::set_average_takeoff(int average_takeoff_time_)
+void StatKeeper::set_average_takeoff(int average_takeoff_time_)
 {
-	int a = 0;
-	return a;
 }
 
 //Sets the average time it took for landing.
-int StatKeeper::set_average_landing(int average_landing_time_)
+void StatKeeper::set_average_landing(int average_landing_time_)
 {
-	int a = 0;
-	return a;
 }

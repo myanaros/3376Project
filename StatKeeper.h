@@ -23,12 +23,12 @@ class StatKeeper {
 		int get_average_landing();
 
 	//Class mutator methods.
-		int set_total_time(int, int);
-		int set_total_takeoffs(int);
-		int set_total_landings(int);
-		int set_total_crashes(int);
-		int set_average_takeoff(int);
-		int set_average_landing(int);
+		void set_total_time(int, int);
+		void set_total_takeoffs(int);
+		void set_total_landings(int);
+		void set_total_crashes(int);
+		void set_average_takeoff(int);
+		void set_average_landing(int);
 
 
 };
