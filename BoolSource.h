@@ -3,11 +3,20 @@
 
 class BoolSource {
     private:
-        int probability_;
-    public:
-        int probability();
-        void set_probability(int);
+        float probability_;
 
+    public:
+        // Constructors/Destructors
+        BoolSource(const float probability);
+        ~BoolSource() {};
+
+        // Accessors
+        float probability();
+
+        // Mutators
+        void set_probability(const float probability);
+
+        // Other
         bool shouldAddToQueue();
 };
 
