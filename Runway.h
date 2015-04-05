@@ -2,21 +2,30 @@
 #define __CS3376_RUNWAY_H__
 
 class Runway {
-    public:
-        int get_landing_duration();
-        void set_landing_duration(int);
-        int get_takeoff_duration_();
-        void set_takeoff_duration_(int);
-        int get_busy_until();
-        void set_busy_until(int);
-
-        bool isClear();
-        void doLanding();
-        void doTakeoff();
     private:
+        int busy_until_;
         int landing_duration_;
         int takeoff_duration_;
-        int busy_until_;
+
+    public:
+        // Constructors/Destructors
+        Runway(const int takeoff_duration, const int landing_duration);
+        ~Runway() {};
+
+        // Accessors
+        int busy_until();
+        int landing_duration();
+        int takeoff_duration();
+
+        // Mutators
+        void set_busy_until(const int busy_until);
+        void set_landing_duration(const int landing_duration);
+        void set_takeoff_duration(const int takeoff_duration);
+
+        // Other
+        bool isClear(const int cur_time);
+        void doLanding(const int cur_time);
+        void doTakeoff(const int cur_time);
 };
 
 #endif
