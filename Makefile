@@ -1,41 +1,46 @@
 CC=g++
-ER=-Wall -g -c
+CFLAGS=-Wall -Werror
+# Comment out for release build
+DEBUG=-g -DDEBUG
 
+BINARY=airsim
+SOURCES=airsim.cpp Airplane.cpp BoolSource.cpp Queue.cpp Runway.cpp StatKeeper.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
 
 .PHONY: all
-all : airsim
+all : $(BINARY)
 
-#Makes executable
-airsim : airsim.o Airplane.o BoolSource.o Queue.o Runway.o StatKeeper.o
-	$(CC) -o airsim $^
+# Makes executable
+$(BINARY) : $(OBJECTS)
+	$(CC) $(LDFLAGS) $(DEBUG) -o $@ $^
 
-#Makes airsim object used for executable
+# Makes airsim object used for executable
+# $@ = name of file matched by target
+# $< = name of first prereq
 airsim.o : airsim.cpp Airplane.h BoolSource.h Queue.h Runway.h StatKeeper.h
-	$(CC) $(ER) airsim.cpp
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Makes Airplane object file
+# Makes Airplane object file
 Airplane.o : Airplane.cpp Airplane.h
-	$(CC) $(ER) Airplane.cpp
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Makes BoolSource object file
-BoolSource.o : BoolSource.h BoolSource.cpp
-	$(CC) $(ER) BoolSource.cpp
+# Makes BoolSource object file
+BoolSource.o : BoolSource.cpp BoolSource.h
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Makes Queue object file
+# Makes Queue object file
 Queue.o : Queue.cpp Queue.h
-	$(CC) $(ER) Queue.cpp
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Makes Runway object file
+# Makes Runway object file
 Runway.o : Runway.cpp Runway.h
-	$(CC) $(ER) Runway.cpp
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Makes StatKeeper object file
+# Makes StatKeeper object file
 StatKeeper.o : StatKeeper.cpp StatKeeper.h
-	$(CC) $(ER) StatKeeper.cpp
+	$(CC) $(CFLAGS) $(DEBUG) -c -o $@ $<
 
-#Removes the Object files if needed to update
+# Removes the Object files if needed to update
 .PHONY: clean
 clean :
-	rm airsim airsim.o Airplane.o BoolSource.o Queue.o Runway.o StatKeeper.o
-
-
+	rm $(BINARY) $(OBJECTS)

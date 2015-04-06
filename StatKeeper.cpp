@@ -4,89 +4,104 @@
 #include <iostream>
 #include "StatKeeper.h"
 
+// ---------------------------------------------------------------------
+// Constructors / Destructors
+// ---------------------------------------------------------------------
 
-//Constructor
-StatKeeper::StatKeeper()
+StatKeeper::StatKeeper(const int start_time, const int end_time)
 {
-	total_time_ = 0;
-	total_takeoffs_ = 0;
-	total_landings_ = 0;
-	total_crashes_ = 0;
-	average_takeoff_ = 0;
-	average_landing_ = 0;
+	set_total_sim_time(start_time - end_time);
+	set_total_takeoffs(0);
+	set_total_landings(0);
+	set_total_crashes(0);
+	set_total_takeoff_time(0);
+	set_total_landing_time(0);
 }
 
+// ---------------------------------------------------------------------
+// Accessors
+// ---------------------------------------------------------------------
 
-//Accessor Methods
-
-
-//Gets the total time of simulation.
-int StatKeeper::get_total_time()
+// Gets the total time of simulation.
+int StatKeeper::total_sim_time()
 {
-	return total_time_;
+	return total_sim_time_;
 }
 
-//Gets the total amount of takeoffs.
-int StatKeeper::get_total_takeoffs()
+// Gets the total amount of takeoffs.
+int StatKeeper::total_takeoffs()
 {
 	return total_takeoffs_;
 }
 
-//Gets the total amount of landings.
-int StatKeeper::get_total_landings()
+// Gets the total amount of landings.
+int StatKeeper::total_landings()
 {
 	return total_landings_;
 }
 
-//Gets the total amount of flights crashing.
-int StatKeeper::get_total_crashes()
+// Gets the total amount of flights crashing.
+int StatKeeper::total_crashes()
 {
 	return total_crashes_;
 }
 
-//Gets the average time it took a plane for takeoff.
-int StatKeeper::get_average_takeoff()
+// Gets the total time spent by planes in takeoff queue
+int StatKeeper::total_takeoff_time()
 {
-	return average_takeoff_;
+	return total_takeoff_time_;
 }
 
-//Gets the average time it took a plane to land.
-int StatKeeper::get_average_landing()
+// Gets the total time spent by planes in landing queue
+int StatKeeper::total_landing_time()
 {
-	return average_landing_;
+	return total_landing_time_;
 }
 
+// ---------------------------------------------------------------------
+// Mutators
+// ---------------------------------------------------------------------
 
-
-//Mutator Methods
-
-
-//Sets the total amount of time for simulation.
-void StatKeeper::set_total_time(int begin, int end)
+// Sets the total amount of time for simulation.
+void StatKeeper::set_total_sim_time(const int total_sim_time)
 {
+    total_sim_time_ = total_sim_time;
 }
 
-//Sets the total amount of takeoffs.
-void StatKeeper::set_total_takeoffs(int takeoff_count_)
+// Sets the total amount of takeoffs.
+void StatKeeper::set_total_takeoffs(const int total_takeoffs)
 {
+    total_takeoffs_ = total_takeoffs;
 }
 
-//Sets the total amount of landings.
-void StatKeeper::set_total_landings(int land_count_)
+// Sets the total amount of landings.
+void StatKeeper::set_total_landings(const int total_landings)
 {
+    total_landings_ = total_landings;
 }
 
-//Sets the total amount of flights crashing.
-void StatKeeper::set_total_crashes(int crash_count_)
+// Sets the total amount of flights crashing.
+void StatKeeper::set_total_crashes(const int total_crashes)
 {
+    total_crashes_ = total_crashes;
 }
 
-//Sets the avaerage time it took for takeoff.
-void StatKeeper::set_average_takeoff(int average_takeoff_time_)
+// Sets the total time spent by planes in takeoff queue
+void StatKeeper::set_total_takeoff_time(int total_takeoff_time)
 {
+    total_takeoff_time_ = total_takeoff_time;
 }
 
-//Sets the average time it took for landing.
-void StatKeeper::set_average_landing(int average_landing_time_)
+// Sets the total time spent by planes in landing queue
+void StatKeeper::set_total_landing_time(int total_landing_time)
 {
+    total_landing_time_ = total_landing_time;
 }
+
+// ---------------------------------------------------------------------
+// Other Member Functions
+// ---------------------------------------------------------------------
+
+// TODO: print stats
+void StatKeeper::printStats() {
+};
