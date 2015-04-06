@@ -1,0 +1,6 @@
+The group met up on Thursday, April 2nd, and discussed several ways to approach the project. We outlined the classes, and some possible methods in each.
+We created a Github project and split up the classes accordingly.
+Pablo set up and implemented the Makefile and StatKeeper class and header.
+Travis set up and implemented the Queue and BoolSource class and header.
+Mark set up and implemented the Airplane and Runway class and header, also constructed the skeleton for airsim.
+Each member reviewed other's code and revised if necessary.
