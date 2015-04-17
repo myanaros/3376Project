@@ -2,6 +2,10 @@
 
 // Project includes
 #include "BoolSource.h"
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
 
 // ---------------------------------------------------------------------
 // Constructors / Destructors
@@ -35,8 +39,18 @@ void BoolSource::set_probability(const float probability)
 // Other Member Functions
 // ---------------------------------------------------------------------
 
-// TODO whether or not something should be added to queue
+// If the random value is less than the probability than
+// a plane should be added to it's respective queue
 bool BoolSource::shouldAddToQueue()
 {
-    return false;
+    bool shouldAdd = (rand() % 100) < probability_ * 100;
+
+    if(shouldAdd)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

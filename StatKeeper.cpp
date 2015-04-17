@@ -10,12 +10,16 @@
 
 StatKeeper::StatKeeper(const int start_time, const int end_time)
 {
-	set_total_sim_time(start_time - end_time);
+	set_total_sim_time(end_time - start_time);
 	set_total_takeoffs(0);
 	set_total_landings(0);
 	set_total_crashes(0);
 	set_total_takeoff_time(0);
 	set_total_landing_time(0);
+}
+
+StatKeeper::~StatKeeper(void)
+{
 }
 
 // ---------------------------------------------------------------------
@@ -104,4 +108,12 @@ void StatKeeper::set_total_landing_time(int total_landing_time)
 
 // TODO: print stats
 void StatKeeper::printStats() {
-};
+    std::cout << "Total simulation time: " << total_sim_time_ << std::endl;
+    std::cout << "# of planes that took off: " << total_takeoffs_ << std::endl;
+    std::cout << "# of planes that landed: " << total_landings_ << std::endl;
+    std::cout << "# of planes that crashed: " << total_crashes_ << std::endl;
+    float avg_takeoff_time = (float)total_takeoff_time_ / (float)total_takeoffs_;
+    float avg_landing_time = (float)total_landing_time_ / (float)total_landings_;
+    std::cout << "Average take-off time: " << avg_takeoff_time << std::endl;
+    std::cout << "Average landing time: " << avg_landing_time << std::endl;
+}
