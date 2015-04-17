@@ -3,6 +3,9 @@
 // Project includes
 #include <iostream>
 #include "StatKeeper.h"
+#include <iomanip>
+
+using namespace std;
 
 // ---------------------------------------------------------------------
 // Constructors / Destructors
@@ -108,12 +111,12 @@ void StatKeeper::set_total_landing_time(int total_landing_time)
 
 // TODO: print stats
 void StatKeeper::printStats() {
-    std::cout << "Total simulation time: " << total_sim_time_ << std::endl;
-    std::cout << "# of planes that took off: " << total_takeoffs_ << std::endl;
-    std::cout << "# of planes that landed: " << total_landings_ << std::endl;
-    std::cout << "# of planes that crashed: " << total_crashes_ << std::endl;
+    cout << setw(30) << left << "Total simulation time: " << total_sim_time_ << endl;
+    cout << setw(30) << "# of planes that took off: " << total_takeoffs_ << endl;
+    cout << setw(30) << "# of planes that landed: " << total_landings_ << endl;
+    cout << setw(30) << "# of planes that crashed: " << total_crashes_ << endl;
     float avg_takeoff_time = (float)total_takeoff_time_ / (float)total_takeoffs_;
     float avg_landing_time = (float)total_landing_time_ / (float)total_landings_;
-    std::cout << "Average take-off time: " << avg_takeoff_time << std::endl;
-    std::cout << "Average landing time: " << avg_landing_time << std::endl;
+    cout << setw(30) << "Average take-off time: " << avg_takeoff_time << endl;
+    cout << setw(30) << "Average landing time: " << avg_landing_time << endl;
 }
