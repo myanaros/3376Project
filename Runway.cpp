@@ -7,9 +7,11 @@
 // Constructors / Destructors
 // ---------------------------------------------------------------------
 
-Runway::Runway(const int takeoff_duration, const int landing_duration) {
+Runway::Runway(const int takeoff_duration, const int landing_duration,
+        const int cur_time) {
     set_takeoff_duration(takeoff_duration);
     set_landing_duration(landing_duration);
+    set_busy_until(cur_time);
 }
 
 // ---------------------------------------------------------------------
@@ -54,20 +56,17 @@ void Runway::set_takeoff_duration(const int takeoff_duration)
 // Other Member Functions
 // ---------------------------------------------------------------------
 
-// TODO
 bool Runway::isClear(const int cur_time)
 {
-    return false;
+    return cur_time <= busy_until();
 }
 
-// TODO
 void Runway::doLanding(const int cur_time)
 {
-
+    set_busy_until(cur_time + landing_duration());
 }
 
-// TODO
 void Runway::doTakeoff(const int cur_time)
 {
-
+    set_busy_until(cur_time + takeoff_duration());
 }
