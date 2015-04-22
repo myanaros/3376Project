@@ -13,12 +13,12 @@ using namespace std;
 
 StatKeeper::StatKeeper(const int start_time, const int end_time)
 {
-	set_total_sim_time(end_time - start_time);
-	set_total_takeoffs(0);
-	set_total_landings(0);
-	set_total_crashes(0);
-	set_total_takeoff_time(0);
-	set_total_landing_time(0);
+    set_total_sim_time(end_time - start_time);
+    set_total_takeoffs(0);
+    set_total_landings(0);
+    set_total_crashes(0);
+    set_total_takeoff_time(0);
+    set_total_landing_time(0);
 }
 
 StatKeeper::~StatKeeper(void)
@@ -32,37 +32,37 @@ StatKeeper::~StatKeeper(void)
 // Gets the total time of simulation.
 int StatKeeper::total_sim_time()
 {
-	return total_sim_time_;
+    return total_sim_time_;
 }
 
 // Gets the total amount of takeoffs.
 int StatKeeper::total_takeoffs()
 {
-	return total_takeoffs_;
+    return total_takeoffs_;
 }
 
 // Gets the total amount of landings.
 int StatKeeper::total_landings()
 {
-	return total_landings_;
+    return total_landings_;
 }
 
 // Gets the total amount of flights crashing.
 int StatKeeper::total_crashes()
 {
-	return total_crashes_;
+    return total_crashes_;
 }
 
 // Gets the total time spent by planes in takeoff queue
 int StatKeeper::total_takeoff_time()
 {
-	return total_takeoff_time_;
+    return total_takeoff_time_;
 }
 
 // Gets the total time spent by planes in landing queue
 int StatKeeper::total_landing_time()
 {
-	return total_landing_time_;
+    return total_landing_time_;
 }
 
 // ---------------------------------------------------------------------
