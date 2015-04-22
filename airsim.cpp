@@ -124,9 +124,7 @@ int main(int argc, char *argv[]) {
             }
         }    
 #ifdef DEBUG
-        std::cout << "[" << currentMinute << "]"
-            << " runway busy. Will be free @" << runway.busy_until()
-            << std::endl;
+        runway.printDebug(currentMinute);
 #endif
     }
 

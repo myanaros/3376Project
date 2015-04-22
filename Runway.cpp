@@ -1,4 +1,7 @@
 // Standard library includes
+#ifdef DEBUG
+#include <iostream>
+#endif
 
 // Project includes
 #include "Runway.h"
@@ -70,3 +73,11 @@ void Runway::doTakeoff(const int cur_time)
 {
     set_busy_until(cur_time - takeoff_duration());
 }
+
+#ifdef DEBUG
+void Runway::printDebug(const int cur_time) {
+    std::cout << "[" << cur_time << "]"
+        << " runway busy. Will be free @" << busy_until()
+        << std::endl;
+}
+#endif
