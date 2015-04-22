@@ -1,4 +1,5 @@
 // Standard library headers
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <cstdlib>
@@ -149,20 +150,37 @@ void printUsage(const char *const progName) {
         std::cout << "Usage: " << progName << " "
             << "LDUR TDUR PLAND PTOFF START STOP TTL" << std::endl;
         std::cout << std::endl;
-        std::cout << "\tLDUR\tAmount of time it takes a plane to land"
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "LDUR"
+            << "Amount of time it takes a plane to land"
             << std::endl;
-        std::cout << "\tTDUR\tAmount of time it takes a plane to takeoff"
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "TDUR"
+            << "Amount of time it takes a plane to takeoff"
             << std::endl;
-        std::cout << "\tPLAND\tProbability that a plane will enter the"
-            " landing queue (per min.)" << std::endl;
-        std::cout << "\tPTOFF\tProbability that a plane will enter the"
-            " takeoff queue (per min.)" << std::endl;
-        std::cout << "\tSTART\tStart time in minutes before midnight"
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "PLAND"
+            << "Probability that a plane will enter the"
+            " landing queue (per min.)"
             << std::endl;
-        std::cout << "\tSTOP\tStop time in minutes before midnight"
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "PTOFF"
+            << "Probability that a plane will enter the"
+            " takeoff queue (per min.)"
             << std::endl;
-        std::cout << "\tTTL\tAmount of time a plane can spend in the" 
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "START"
+            << "Start time in minutes before midnight"
+            << std::endl;
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "STOP"
+            << "Stop time in minutes before midnight"
+            << std::endl;
+        std::cout << std::setw(4) << " "
+            << std::setw(8) << std::left << "TTL"
+            << "Amount of time a plane can spend in the" 
             << "landing queue before " << std::endl
-            << "\t\tcrashing"
+            << std::setw(12) << std::left << ""
+            << "crashing"
             << std::endl;
 }
