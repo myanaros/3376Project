@@ -16,11 +16,11 @@ class Airplane {
         int start_time_;
         int crash_time_;
 
-        // Accessors
+        // Private Accessors
         int start_time();
         int crash_time();
 
-        // Mutators
+        // Private Mutators
         void set_start_time(const int start_time);
         void set_crash_time(const int crash_time);
 

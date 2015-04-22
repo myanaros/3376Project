@@ -41,7 +41,7 @@ class StatKeeper {
     public:
         // Constructors /Destructors
         StatKeeper(const int start_time, const int end_time);
-        ~StatKeeper();
+        ~StatKeeper() {};
 
         // Other
         void incCrashes(const int amt = 1);

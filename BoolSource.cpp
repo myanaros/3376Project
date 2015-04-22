@@ -1,9 +1,9 @@
 // Standard library includes
+#include <iostream>
+#include <cstdlib>
 
 // Project includes
 #include "BoolSource.h"
-#include <iostream>
-#include <stdlib.h>
 
 using namespace std;
 
