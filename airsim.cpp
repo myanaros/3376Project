@@ -60,9 +60,7 @@ int main(int argc, char *argv[]) {
             landing_queue.push_back(Airplane(currentMinute, crash_time));
 #ifdef DEBUG
             Airplane &tmp = landing_queue.back();
-            std::cout << "[" << currentMinute << "]"
-                << " new landing req,"
-                << " will crash @" << tmp.crash_time() << std::endl;
+            tmp.printDebug(currentMinute, DBG_LREQ);
 #endif
         }
 
@@ -70,10 +68,7 @@ int main(int argc, char *argv[]) {
             takeoff_queue.push_back(Airplane(currentMinute, crash_time));
 #ifdef DEBUG
             Airplane &tmp = landing_queue.back();
-            std::cout << "[" << currentMinute << "]"
-                << " new takeoff req,"
-                << " added @" << tmp.start_time()
-                << std::endl;
+            tmp.printDebug(currentMinute, DBG_TREQ);
 #endif
         }
 
@@ -83,27 +78,19 @@ int main(int argc, char *argv[]) {
                 && landing_queue.front().hasCrashed(currentMinute)) {
                 Airplane &tmp = landing_queue.front();
 #ifdef DEBUG
-                std::cout << "[" << currentMinute << "]"
-                    << " found crashed plane:"
-                    << " entered @" << tmp.start_time()
-                    << ", crashed @" << tmp.crash_time()
-                << std::endl;
+                tmp.printDebug(currentMinute, DBG_CRASH);
 #endif
                 stats.incCrashes();
-                stats.incLandingQueueTime(tmp.start_time() - currentMinute);
+                stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
                 landing_queue.pop_front();
             }
             if(!(landing_queue.empty()))
             {
                 Airplane &tmp = landing_queue.front();
 #ifdef DEBUG
-                std::cout << "[" << currentMinute << "]"
-                    << " landed plane:"
-                    << " entered @" << tmp.start_time()
-                    << ", would crash @" << tmp.crash_time()
-                << std::endl;
+                tmp.printDebug(currentMinute, DBG_LAND);
 #endif
-                stats.incLandingQueueTime(tmp.start_time() - currentMinute);
+                stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
                 stats.incLandings();
                 runway.doLanding(currentMinute);
                 landing_queue.pop_front();
@@ -111,15 +98,12 @@ int main(int argc, char *argv[]) {
             if(!takeoff_queue.empty())
             {
                 Airplane &tmp = takeoff_queue.front();
-                stats.incTakeoffQueueTime(tmp.start_time() - currentMinute);
+#ifdef DEBUG
+                tmp.printDebug(currentMinute, DBG_TOFF);
+#endif
+                stats.incTakeoffQueueTime(tmp.lifeSpan(currentMinute));
                 stats.incTakeoffs();
                 runway.doTakeoff(currentMinute);
-#ifdef DEBUG
-                std::cout << "[" << currentMinute << "]"
-                    << " takeoff, "
-                    << " added @" << tmp.start_time()
-                    << std::endl;
-#endif
                 takeoff_queue.pop_front();
             }
         }    
@@ -134,7 +118,7 @@ int main(int argc, char *argv[]) {
     {
         Airplane &tmp = landing_queue.front();
         stats.incCrashes();
-        stats.incLandingQueueTime(tmp.start_time() - currentMinute);
+        stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
         landing_queue.pop_front();
     }
     // TODO:
