@@ -47,7 +47,13 @@ int main(int argc, char *argv[]) {
 		else if (i==7)
 		crash_time = atoi(argv[i]);
 	}
-//	std::cout << time_to_land << time_for_takeoff << plane_enter_landing << plane_enter_takeoff << start_time << end_time << crash_time;
+
+	Queue takeoff_queue;
+	Queue landing_queue;
+	StatKeeper stats(start_time, end_time);
+	BoolSource if_land(plane_enter_landing);
+	BoolSource if_takeoff(plane_enter_takeoff);
+	Runway runway(time_for_takeoff, time_to_land);
 
     return 0;
 }
