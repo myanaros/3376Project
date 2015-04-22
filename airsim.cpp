@@ -1,7 +1,3 @@
-#ifdef DEBUG
-#define PRINTVAR(x) std::cout << "DEBUG: " << #x << ": " << x << std::endl
-#endif
-
 // Standard library headers
 #include <iostream>
 #include <string>
@@ -18,9 +14,6 @@
 void printUsage(const char *const progName);
 
 int main(int argc, char *argv[]) {
-    // TODO: do this in BoolSource class
-    srand(time(NULL));
-
     if (argc < 8)
     {
         std::cout << "Insufficient arguments." << std::endl;

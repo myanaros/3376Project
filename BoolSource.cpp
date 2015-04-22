@@ -1,5 +1,6 @@
 // Standard library includes
 #include <iostream>
+#include <climits>
 #include <cstdlib>
 
 // Project includes
@@ -8,11 +9,21 @@
 using namespace std;
 
 // ---------------------------------------------------------------------
+// Static vars
+// ---------------------------------------------------------------------
+
+bool BoolSource::is_seeded_ = false;
+
+// ---------------------------------------------------------------------
 // Constructors / Destructors
 // ---------------------------------------------------------------------
 
 BoolSource::BoolSource(const float probability) {
     set_probability(probability);
+    if (!is_seeded()) {
+        srand(time(NULL));
+        set_is_seeded(true);
+    }
 }
 
 // ---------------------------------------------------------------------
@@ -25,6 +36,11 @@ float BoolSource::probability()
     return probability_;
 }
 
+// return is_seeded_
+bool BoolSource::is_seeded() {
+    return is_seeded_;
+}
+
 // ---------------------------------------------------------------------
 // Mutators
 // ---------------------------------------------------------------------
@@ -35,28 +51,22 @@ void BoolSource::set_probability(const float probability)
     probability_ = probability;
 }
 
+// set is_seeded_
+void BoolSource::set_is_seeded(const bool is_seeded) {
+    is_seeded_ = is_seeded;
+}
 // ---------------------------------------------------------------------
 // Other Member Functions
 // ---------------------------------------------------------------------
 
-// If the random value is less than the probability than
-// a plane should be added to it's respective queue
+// returns true with odds according to probability
 bool BoolSource::decide()
 {
-    // TODO: rand() % 100 will likely not have uniform distribution.
-    // This is due to two factors:
-    // 1:   UINT_MAX % 100 = 35 (on 32-bit systems)
-    //      So rand() % 100 will yield more numbers between 0 and 35
-    //      than between 35 and 99.
-    // 2:   Many PRNGs have very biased moduli.
-    bool shouldAdd = (rand() % 100) < probability() * 100;
-
-    if(shouldAdd)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    float randNormal = (float)rand() / (float)UINT_MAX;
+    // if a random normalized value between 0 and 1 is less
+    // than our probability threshold, return true;
+    // Ex. probability = 0.10:
+    //      a true random normalized value will be less than 0.10
+    //      exactly 10% of the time.
+    return randNormal < probability();
 }

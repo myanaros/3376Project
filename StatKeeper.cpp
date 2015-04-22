@@ -25,10 +25,6 @@ StatKeeper::StatKeeper(const int start_time, const int end_time)
     set_landing_queue_time(0);
 }
 
-StatKeeper::~StatKeeper(void)
-{
-}
-
 // ---------------------------------------------------------------------
 // Accessors
 // ---------------------------------------------------------------------
