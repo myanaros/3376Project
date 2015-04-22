@@ -90,8 +90,8 @@ int main(int argc, char *argv[]) {
                     << ", crashed @" << tmp.crash_time()
                 << std::endl;
 #endif
-                stats.set_total_crashes(stats.total_crashes() + 1);
-                stats.set_total_landing_time(stats.total_landing_time()
+                stats.set_crashes(stats.crashes() + 1);
+                stats.set_landing_queue_time(stats.landing_queue_time()
                         + tmp.start_time() - currentMinute);
                 landing_queue.pop_front();
             }
@@ -105,17 +105,17 @@ int main(int argc, char *argv[]) {
                     << ", would crash @" << tmp.crash_time()
                 << std::endl;
 #endif
-                stats.set_total_landing_time(stats.total_landing_time()
+                stats.set_landing_queue_time(stats.landing_queue_time()
                         + tmp.start_time() - currentMinute);
-                stats.set_total_landings(stats.total_landings() + 1);
+                stats.set_landings(stats.landings() + 1);
                 runway.doLanding(currentMinute);
                 landing_queue.pop_front();
             }
             if(!takeoff_queue.empty())
             {
                 Airplane &tmp = takeoff_queue.front();
-                stats.set_total_takeoff_time(stats.total_takeoff_time() + tmp.start_time() - currentMinute);
-                stats.set_total_takeoffs(stats.total_takeoffs() + 1);
+                stats.set_takeoff_queue_time(stats.takeoff_queue_time() + tmp.start_time() - currentMinute);
+                stats.set_takeoffs(stats.takeoffs() + 1);
                 runway.doTakeoff(currentMinute);
 #ifdef DEBUG
                 std::cout << "[" << currentMinute << "]"
@@ -138,8 +138,8 @@ int main(int argc, char *argv[]) {
             && landing_queue.front().hasCrashed(currentMinute))
     {
         Airplane &tmp = landing_queue.front();
-        stats.set_total_crashes(stats.total_crashes()+1);
-        stats.set_total_landing_time(stats.total_landing_time()
+        stats.set_crashes(stats.crashes()+1);
+        stats.set_landing_queue_time(stats.landing_queue_time()
                 + tmp.start_time() - currentMinute);
         landing_queue.pop_front();
     }

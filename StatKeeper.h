@@ -3,12 +3,12 @@
 
 class StatKeeper {
     private:
-        int total_sim_time_;
-        int total_crashes_;
-        int total_landings_;
-        int total_takeoffs_;
-        int total_landing_time_;
-        int total_takeoff_time_;
+        int sim_time_;
+        int crashes_;
+        int landings_;
+        int takeoffs_;
+        int landing_queue_time_;
+        int takeoff_queue_time_;
     
     public:
         // Constructors /Destructors
@@ -16,20 +16,20 @@ class StatKeeper {
         ~StatKeeper();
 
         // Accessors
-        int total_sim_time();
-        int total_crashes();
-        int total_landings();
-        int total_takeoffs();
-        int total_landing_time();
-        int total_takeoff_time();
+        int sim_time();
+        int crashes();
+        int landings();
+        int takeoffs();
+        int landing_queue_time();
+        int takeoff_queue_time();
 
         // Mutators
-        void set_total_sim_time(const int total_sim_time);
-        void set_total_crashes(const int total_crashes);
-        void set_total_landings(const int total_landings);
-        void set_total_takeoffs(const int total_takeoffs);
-        void set_total_landing_time(const int total_landing_time);
-        void set_total_takeoff_time(const int total_takeoff_time);
+        void set_sim_time(const int sim_time);
+        void set_crashes(const int crashes);
+        void set_landings(const int landings);
+        void set_takeoffs(const int takeoffs);
+        void set_landing_queue_time(const int landing_queue_time);
+        void set_takeoff_queue_time(const int takeoff_queue_time);
 
         // Other
         void printStats();
