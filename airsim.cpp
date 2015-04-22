@@ -1,4 +1,6 @@
+#ifdef DEBUG
 #define PRINTVAR(x) std::cout << "DEBUG: " << #x << ": " << x << std::endl
+#endif
 
 // Standard library headers
 #include <iostream>
@@ -13,113 +15,124 @@
 #include "Runway.h"
 #include "StatKeeper.h"
 
+void printUsage(const char *const progName);
+
 int main(int argc, char *argv[]) {
+    // TODO: do this in BoolSource class
     srand(time(NULL));
 
     if (argc < 8)
     {
-        std::cout << "Not enough arguments passed. Needs 7 arguments. "
-            << "Terminating simulation.\n";
+        std::cout << "Insufficient arguments." << std::endl;
+        printUsage(argv[0]);
         return 1;
     }
     if (argc > 8)
     {
-        std::cout << "Too many arguments. Requires 7 arguments. "
-            << "Terminating simulation. \n";
+        std::cout << "Excessive arguments." << std::endl;
+        printUsage(argv[0]);
         return 1;
     }
 
-    int time_to_land;
-    int time_for_takeoff;
-    double plane_enter_landing;
-    double plane_enter_takeoff;
-    int start_time;
-    int end_time;
-    int crash_time;
-    
+    // Parse arguments
+    int landDuration = atoi(argv[1]);
+    int toffDuration = atoi(argv[2]);
+    double probLand = atof(argv[3]);
+    double probToff = atof(argv[4]);
+    int startTime = atoi(argv[5]);
+    int endTime = atoi(argv[6]);
+    int ttl = atoi(argv[7]);
 
-    time_to_land = atoi(argv[1]);
-    time_for_takeoff = atoi(argv[2]);
-    plane_enter_landing = atof(argv[3]);
-    plane_enter_takeoff = atof(argv[4]);
-    start_time = atoi(argv[5]);
-    end_time = atoi(argv[6]);
-    crash_time = atoi(argv[7]);
+    // Initialize objects
+    Queue toffQueue, landQueue;
+    StatKeeper stats(startTime, endTime);
+    BoolSource
+        landSource(probLand),
+        toffSource(probToff);
+    Runway runway(toffDuration, landDuration, startTime);
 
-    Queue takeoff_queue;
-    Queue landing_queue;
-    StatKeeper stats(start_time, end_time);
-    BoolSource if_land(plane_enter_landing);
-    BoolSource if_takeoff(plane_enter_takeoff);
-    Runway runway(time_for_takeoff, time_to_land, start_time);
-
-    int currentMinute;
-    for(currentMinute = start_time; currentMinute > end_time; --currentMinute)
+    // Time loop
+    int t;
+    for(t = startTime; t > endTime; t--)
     {
-        if(if_land.shouldAddToQueue() == true) {
-            landing_queue.push_back(Airplane(currentMinute, crash_time));
+        // Check if we should add a plane to the landing queue
+        if(landSource.decide()) {
+            landQueue.push_back(Airplane(t, ttl));
 #ifdef DEBUG
-            Airplane &tmp = landing_queue.back();
-            tmp.printDebug(currentMinute, DBG_LREQ);
+            Airplane &plane = landQueue.back();
+            plane.printDebug(t, DBG_LREQ);
 #endif
         }
 
-        if(if_takeoff.shouldAddToQueue() == true) {
-            takeoff_queue.push_back(Airplane(currentMinute, crash_time));
+        // Check if we should add a plane to the takeoff queue
+        if(toffSource.decide()) {
+            toffQueue.push_back(Airplane(t, ttl));
 #ifdef DEBUG
-            Airplane &tmp = landing_queue.back();
-            tmp.printDebug(currentMinute, DBG_TREQ);
+            Airplane &plane = landQueue.back();
+            plane.printDebug(t, DBG_TREQ);
 #endif
         }
 
-        if (runway.isClear(currentMinute))
+        // If the runway isn't busy...
+        if (runway.isClear(t))
         {
-            while (!landing_queue.empty()
-                && landing_queue.front().hasCrashed(currentMinute)) {
-                Airplane &tmp = landing_queue.front();
+            // Seek from the front of the landing queue, discarding crashed
+            // planes until we either empty the queue or find an uncrashed
+            // plane.
+            while (!landQueue.empty()
+                && landQueue.front().hasCrashed(t))
+            {
+                Airplane &plane = landQueue.front();
 #ifdef DEBUG
-                tmp.printDebug(currentMinute, DBG_CRASH);
+                plane.printDebug(t, DBG_CRASH);
 #endif
                 stats.incCrashes();
-                stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
-                landing_queue.pop_front();
+                stats.incLandingQueueTime(plane.lifeSpan(t));
+                landQueue.pop_front();
             }
-            if(!(landing_queue.empty()))
+
+            // if there are uncrashed planes in the landing queue, land one.
+            if(!(landQueue.empty()))
             {
-                Airplane &tmp = landing_queue.front();
+                Airplane &plane = landQueue.front();
 #ifdef DEBUG
-                tmp.printDebug(currentMinute, DBG_LAND);
+                plane.printDebug(t, DBG_LAND);
 #endif
-                stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
+                stats.incLandingQueueTime(plane.lifeSpan(t));
                 stats.incLandings();
-                runway.doLanding(currentMinute);
-                landing_queue.pop_front();
+                runway.doLanding(t);
+                landQueue.pop_front();
             }
-            if(!takeoff_queue.empty())
+
+            // otherwise, if there are planes in the takeoff queue, let one
+            // takeoff.
+            else if(!toffQueue.empty())
             {
-                Airplane &tmp = takeoff_queue.front();
+                Airplane &plane = toffQueue.front();
 #ifdef DEBUG
-                tmp.printDebug(currentMinute, DBG_TOFF);
+                plane.printDebug(t, DBG_TOFF);
 #endif
-                stats.incTakeoffQueueTime(tmp.lifeSpan(currentMinute));
+                stats.incTakeoffQueueTime(plane.lifeSpan(t));
                 stats.incTakeoffs();
-                runway.doTakeoff(currentMinute);
-                takeoff_queue.pop_front();
+                runway.doTakeoff(t);
+                toffQueue.pop_front();
             }
         }    
+        // Runway is busy. Nothing to do this tick.
 #ifdef DEBUG
-        runway.printDebug(currentMinute);
+        runway.printDebug(t);
 #endif
     }
 
-    
-    while(!landing_queue.empty()
-            && landing_queue.front().hasCrashed(currentMinute))
+    // After the simulation, empty the landing queue, updating StatKeeper
+    // with whatever you find there.
+    while(!landQueue.empty()
+            && landQueue.front().hasCrashed(t))
     {
-        Airplane &tmp = landing_queue.front();
+        Airplane &plane = landQueue.front();
         stats.incCrashes();
-        stats.incLandingQueueTime(tmp.lifeSpan(currentMinute));
-        landing_queue.pop_front();
+        stats.incLandingQueueTime(plane.lifeSpan(t));
+        landQueue.pop_front();
     }
     // TODO:
     // Queuing time stats don't reflect planes still in the queues when
@@ -128,4 +141,26 @@ int main(int argc, char *argv[]) {
     stats.printStats();
 
     return 0;
+}
+
+void printUsage(const char *const progName) {
+        std::cout << "Usage: " << progName << " "
+            << "LDUR TDUR PLAND PTOFF START STOP TTL" << std::endl;
+        std::cout << std::endl;
+        std::cout << "\tLDUR\tAmount of time it takes a plane to land"
+            << std::endl;
+        std::cout << "\tTDUR\tAmount of time it takes a plane to takeoff"
+            << std::endl;
+        std::cout << "\tPLAND\tProbability that a plane will enter the"
+            " landing queue (per min.)" << std::endl;
+        std::cout << "\tPTOFF\tProbability that a plane will enter the"
+            " takeoff queue (per min.)" << std::endl;
+        std::cout << "\tSTART\tStart time in minutes before midnight"
+            << std::endl;
+        std::cout << "\tSTOP\tStop time in minutes before midnight"
+            << std::endl;
+        std::cout << "\tTTL\tAmount of time a plane can spend in the" 
+            << "landing queue before " << std::endl
+            << "\t\tcrashing"
+            << std::endl;
 }

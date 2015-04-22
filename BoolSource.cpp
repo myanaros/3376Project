@@ -41,7 +41,7 @@ void BoolSource::set_probability(const float probability)
 
 // If the random value is less than the probability than
 // a plane should be added to it's respective queue
-bool BoolSource::shouldAddToQueue()
+bool BoolSource::decide()
 {
     // TODO: rand() % 100 will likely not have uniform distribution.
     // This is due to two factors:

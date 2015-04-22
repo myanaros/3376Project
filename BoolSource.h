@@ -17,7 +17,7 @@ class BoolSource {
         void set_probability(const float probability);
 
         // Other
-        bool shouldAddToQueue();
+        bool decide();
 };
 
 #endif
