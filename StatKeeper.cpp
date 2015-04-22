@@ -109,6 +109,26 @@ void StatKeeper::set_landing_queue_time(int landing_queue_time)
 // Other Member Functions
 // ---------------------------------------------------------------------
 
+void StatKeeper::incCrashes(const int amt) {
+    set_crashes(crashes() + amt);
+}
+
+void StatKeeper::incLandings(const int amt) {
+    set_landings(landings() + amt);
+}
+
+void StatKeeper::incTakeoffs(const int amt) {
+    set_takeoffs(takeoffs() + amt);
+}
+
+void StatKeeper::incLandingQueueTime(const int amt) {
+    set_landing_queue_time(landing_queue_time() + amt);
+}
+
+void StatKeeper::incTakeoffQueueTime(const int amt) {
+    set_takeoff_queue_time(takeoff_queue_time() + amt);
+}
+
 void StatKeeper::printStats() {
     cout << setw(30) << left << "Total simulation time: " << sim_time() << endl;
     cout << setw(30) << "# of planes that took off: " << takeoffs() << endl;

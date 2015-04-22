@@ -10,11 +10,6 @@ class StatKeeper {
         int landing_queue_time_;
         int takeoff_queue_time_;
     
-    public:
-        // Constructors /Destructors
-        StatKeeper(const int start_time, const int end_time);
-        ~StatKeeper();
-
         // Accessors
         int sim_time();
         int crashes();
@@ -23,7 +18,7 @@ class StatKeeper {
         int landing_queue_time();
         int takeoff_queue_time();
 
-        // Mutators
+        // Private Mutators
         void set_sim_time(const int sim_time);
         void set_crashes(const int crashes);
         void set_landings(const int landings);
@@ -31,7 +26,17 @@ class StatKeeper {
         void set_landing_queue_time(const int landing_queue_time);
         void set_takeoff_queue_time(const int takeoff_queue_time);
 
+    public:
+        // Constructors /Destructors
+        StatKeeper(const int start_time, const int end_time);
+        ~StatKeeper();
+
         // Other
+        void incCrashes(const int amt = 1);
+        void incLandings(const int amt = 1);
+        void incTakeoffs(const int amt = 1);
+        void incLandingQueueTime(const int amt);
+        void incTakeoffQueueTime(const int amt);
         void printStats();
 };
 
