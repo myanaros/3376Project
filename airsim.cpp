@@ -14,7 +14,6 @@
 #include "StatKeeper.h"
 
 int main(int argc, char *argv[]) {
-    // TODO: seed rand() calls at the beginning of the program.
     srand(time(NULL));
 
     if (argc < 8)

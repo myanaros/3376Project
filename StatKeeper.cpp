@@ -109,7 +109,6 @@ void StatKeeper::set_landing_queue_time(int landing_queue_time)
 // Other Member Functions
 // ---------------------------------------------------------------------
 
-// TODO: print stats
 void StatKeeper::printStats() {
     cout << setw(30) << left << "Total simulation time: " << sim_time() << endl;
     cout << setw(30) << "# of planes that took off: " << takeoffs() << endl;
