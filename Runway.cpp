@@ -63,10 +63,10 @@ bool Runway::isClear(const int cur_time)
 
 void Runway::doLanding(const int cur_time)
 {
-    set_busy_until(cur_time + landing_duration());
+    set_busy_until(cur_time - landing_duration());
 }
 
 void Runway::doTakeoff(const int cur_time)
 {
-    set_busy_until(cur_time + takeoff_duration());
+    set_busy_until(cur_time - takeoff_duration());
 }

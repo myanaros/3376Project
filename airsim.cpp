@@ -1,4 +1,10 @@
+#define PRINTVAR(x) std::cout << "DEBUG: " << #x << ": " << x << std::endl
+
 // Standard library headers
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <unistd.h>
 
 // Project headers
 #include "Airplane.h"
@@ -6,24 +12,24 @@
 #include "Queue.h"
 #include "Runway.h"
 #include "StatKeeper.h"
-#include <iostream>
-#include <string>
-#include <stdlib.h>
-#include <unistd.h>
+
 int main(int argc, char *argv[]) {
-    //Needed to seed rand() calls at the beginning of the program.
+    // TODO: seed rand() calls at the beginning of the program.
     srand(time(NULL));
 
     if (argc < 8)
     {
-        std::cout << "Not enough arguments passed. Needs 7 arguments. Terminating simulation.\n";
+        std::cout << "Not enough arguments passed. Needs 7 arguments. "
+            << "Terminating simulation.\n";
         return 1;
     }
     if (argc > 8)
     {
-        std::cout << "Too many arguments. Requires 7 arguments. Terminating simulation. \n";
+        std::cout << "Too many arguments. Requires 7 arguments. "
+            << "Terminating simulation. \n";
         return 1;
     }
+
     int time_to_land;
     int time_for_takeoff;
     double plane_enter_landing;
@@ -31,23 +37,15 @@ int main(int argc, char *argv[]) {
     int start_time;
     int end_time;
     int crash_time;
-    for (int i = 1; i <= argc; i++)
-    {
-        if(i==1)
-        time_to_land = atoi(argv[i]);
-        else if (i==2)
-        time_for_takeoff = atoi(argv[i]);
-        else if (i==3)
-        plane_enter_landing = atof(argv[i]);
-        else if (i==4)
-        plane_enter_takeoff = atof(argv[i]);
-        else if (i==5)
-        start_time = atoi(argv[i]);
-        else if (i==6)
-        end_time = atoi(argv[i]);
-        else if (i==7)
-        crash_time = atoi(argv[i]);
-    }
+    
+
+    time_to_land = atoi(argv[1]);
+    time_for_takeoff = atoi(argv[2]);
+    plane_enter_landing = atof(argv[3]);
+    plane_enter_takeoff = atof(argv[4]);
+    start_time = atoi(argv[5]);
+    end_time = atoi(argv[6]);
+    crash_time = atoi(argv[7]);
 
     Queue takeoff_queue;
     Queue landing_queue;
@@ -55,54 +53,101 @@ int main(int argc, char *argv[]) {
     BoolSource if_land(plane_enter_landing);
     BoolSource if_takeoff(plane_enter_takeoff);
     Runway runway(time_for_takeoff, time_to_land, start_time);
+
     int currentMinute;
     for(currentMinute = start_time; currentMinute > end_time; --currentMinute)
     {
-        if(if_land.shouldAddToQueue() == true)
-        landing_queue.push_back(Airplane(currentMinute, crash_time));
+        if(if_land.shouldAddToQueue() == true) {
+            landing_queue.push_back(Airplane(currentMinute, crash_time));
+#ifdef DEBUG
+            Airplane &tmp = landing_queue.back();
+            std::cout << "[" << currentMinute << "]"
+                << " new landing req,"
+                << " will crash @" << tmp.crash_time() << std::endl;
+#endif
+        }
 
-        if(if_takeoff.shouldAddToQueue() == true)
-        takeoff_queue.push_back(Airplane(currentMinute, crash_time));
+        if(if_takeoff.shouldAddToQueue() == true) {
+            takeoff_queue.push_back(Airplane(currentMinute, crash_time));
+#ifdef DEBUG
+            Airplane &tmp = landing_queue.back();
+            std::cout << "[" << currentMinute << "]"
+                << " new takeoff req,"
+                << " added @" << tmp.start_time()
+                << std::endl;
+#endif
+        }
 
         if (runway.isClear(currentMinute))
         {
+            while (!landing_queue.empty()
+                && landing_queue.front().hasCrashed(currentMinute)) {
+#ifdef DEBUG
+                Airplane &tmp = landing_queue.front();
+                std::cout << "[" << currentMinute << "]"
+                    << " found crashed plane:"
+                    << " entered @" << tmp.start_time()
+                    << ", crashed @" << tmp.crash_time()
+                << std::endl;
+#endif
+                stats.set_total_crashes(stats.total_crashes() + 1);
+                stats.set_total_landing_time(stats.total_landing_time()
+                        + tmp.start_time() - currentMinute);
+                landing_queue.pop_front();
+            }
             if(!(landing_queue.empty()))
             {
                 Airplane &tmp = landing_queue.front();
-                stats.set_total_landing_time(stats.total_landing_time() + tmp.start_time() - currentMinute);
-                if(tmp.hasCrashed(currentMinute))
-                {
-                    stats.set_total_crashes(stats.total_crashes() + 1);
-                }
-                else
-                {
-                    stats.set_total_landings(stats.total_landings() + 1);
-                    runway.doLanding(currentMinute);
-                }
+#ifdef DEBUG
+                std::cout << "[" << currentMinute << "]"
+                    << " landed plane:"
+                    << " entered @" << tmp.start_time()
+                    << ", would crash @" << tmp.crash_time()
+                << std::endl;
+#endif
+                stats.set_total_landing_time(stats.total_landing_time()
+                        + tmp.start_time() - currentMinute);
+                stats.set_total_landings(stats.total_landings() + 1);
+                runway.doLanding(currentMinute);
                 landing_queue.pop_front();
             }
-            else if(!(takeoff_queue.empty()))
+            if(!takeoff_queue.empty())
             {
                 Airplane &tmp = takeoff_queue.front();
                 stats.set_total_takeoff_time(stats.total_takeoff_time() + tmp.start_time() - currentMinute);
                 stats.set_total_takeoffs(stats.total_takeoffs() + 1);
                 runway.doTakeoff(currentMinute);
+#ifdef DEBUG
+                std::cout << "[" << currentMinute << "]"
+                    << " takeoff, "
+                    << " added @" << tmp.start_time()
+                    << std::endl;
+#endif
                 takeoff_queue.pop_front();
             }
-        
         }    
+#ifdef DEBUG
+        std::cout << "[" << currentMinute << "]"
+            << " runway busy. Will be free @" << runway.busy_until()
+            << std::endl;
+#endif
     }
 
     
-    while(!landing_queue.empty() && landing_queue.front().hasCrashed(currentMinute))
+    while(!landing_queue.empty()
+            && landing_queue.front().hasCrashed(currentMinute))
     {
         Airplane &tmp = landing_queue.front();
         stats.set_total_crashes(stats.total_crashes()+1);
-        stats.set_total_landing_time(stats.total_landing_time() + tmp.start_time() - currentMinute);
+        stats.set_total_landing_time(stats.total_landing_time()
+                + tmp.start_time() - currentMinute);
         landing_queue.pop_front();
     }
+    // TODO:
+    // Queuing time stats don't reflect planes still in the queues when
+    // the simulation ends. Making this work will require making some
+    // changes to the design of StatTracker.
     stats.printStats();
-
 
     return 0;
 }
