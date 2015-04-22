@@ -58,6 +58,7 @@ int main(int argc, char *argv[]) {
         // Check if we should add a plane to the landing queue
         if(landSource.decide()) {
             landQueue.push_back(Airplane(t, ttl));
+            stats.incLandingReqs();
 #ifdef DEBUG
             Airplane &plane = landQueue.back();
             plane.printDebug(t, DBG_LREQ);
@@ -67,6 +68,7 @@ int main(int argc, char *argv[]) {
         // Check if we should add a plane to the takeoff queue
         if(toffSource.decide()) {
             toffQueue.push_back(Airplane(t, ttl));
+            stats.incTakeoffReqs();
 #ifdef DEBUG
             Airplane &plane = landQueue.back();
             plane.printDebug(t, DBG_TREQ);
@@ -126,18 +128,25 @@ int main(int argc, char *argv[]) {
 
     // After the simulation, empty the landing queue, updating StatKeeper
     // with whatever you find there.
-    while(!landQueue.empty()
-            && landQueue.front().hasCrashed(t))
-    {
+    while(!landQueue.empty()) {
         Airplane &plane = landQueue.front();
-        stats.incCrashes();
+        if (plane.hasCrashed(t)) {
+            stats.incCrashes();
+        }
+        else {
+            stats.incRemainingLandingReqs();
+        }
         stats.incLandingQueueTime(plane.lifeSpan(t));
         landQueue.pop_front();
     }
-    // TODO:
-    // Queuing time stats don't reflect planes still in the queues when
-    // the simulation ends. Making this work will require making some
-    // changes to the design of StatTracker.
+    // After the simulation, empty the takeoff queue, updating StatKeeper
+    // with whatever you find there.
+    while(!toffQueue.empty()) {
+        Airplane &plane = toffQueue.front();
+        stats.incRemainingTakeoffReqs();
+        stats.incTakeoffQueueTime(plane.lifeSpan(t));
+        toffQueue.pop_front();
+    }
     stats.printStats();
 
     return 0;
