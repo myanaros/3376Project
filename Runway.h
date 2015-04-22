@@ -9,7 +9,8 @@ class Runway {
 
     public:
         // Constructors/Destructors
-        Runway(const int takeoff_duration, const int landing_duration);
+        Runway(const int takeoff_duration, const int landing_duration,
+                const int cur_time);
         ~Runway() {};
 
         // Accessors
