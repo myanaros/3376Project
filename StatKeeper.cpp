@@ -111,20 +111,20 @@ void StatKeeper::set_landing_queue_time(int landing_queue_time)
 
 // TODO: print stats
 void StatKeeper::printStats() {
-    cout << setw(30) << left << "Total simulation time: " << sim_time_ << endl;
-    cout << setw(30) << "# of planes that took off: " << takeoffs_ << endl;
-    cout << setw(30) << "# of planes that landed: " << landings_ << endl;
-    cout << setw(30) << "# of planes that crashed: " << crashes_ << endl;
-    float avg_takeoff_time;
+    cout << setw(30) << left << "Total simulation time: " << sim_time() << endl;
+    cout << setw(30) << "# of planes that took off: " << takeoffs() << endl;
+    cout << setw(30) << "# of planes that landed: " << landings() << endl;
+    cout << setw(30) << "# of planes that crashed: " << crashes() << endl;
+    float avg_takeoff_queue_time;
     if (takeoffs() > 0) {
-        avg_takeoff_time = (float)takeoff_queue_time_ / (float)takeoffs_;
+        avg_takeoff_queue_time = (float)takeoff_queue_time() / (float)takeoffs();
     }
-    else avg_takeoff_time = 0;
-    float avg_landing_time;
+    else avg_takeoff_queue_time = 0;
+    float avg_landing_queue_time;
     if (landings() > 0) {
-        avg_landing_time = (float)landing_queue_time_ / (float)landings_;
+        avg_landing_queue_time = (float)landing_queue_time() / (float)landings();
     }
-    else avg_landing_time = 0;
-    cout << setw(30) << "Average take-off queuing time: " << avg_takeoff_time << endl;
-    cout << setw(30) << "Average landing queuing time: " << avg_landing_time << endl;
+    else avg_landing_queue_time = 0;
+    cout << setw(30) << "Average take-off queuing time: " << avg_takeoff_queue_time << endl;
+    cout << setw(30) << "Average landing queuing time: " << avg_landing_queue_time << endl;
 }

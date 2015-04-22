@@ -43,7 +43,13 @@ void BoolSource::set_probability(const float probability)
 // a plane should be added to it's respective queue
 bool BoolSource::shouldAddToQueue()
 {
-    bool shouldAdd = (rand() % 100) < probability_ * 100;
+    // TODO: rand() % 100 will likely not have uniform distribution.
+    // This is due to two factors:
+    // 1:   UINT_MAX % 100 = 35 (on 32-bit systems)
+    //      So rand() % 100 will yield more numbers between 0 and 35
+    //      than between 35 and 99.
+    // 2:   Many PRNGs have very biased moduli.
+    bool shouldAdd = (rand() % 100) < probability() * 100;
 
     if(shouldAdd)
     {
