@@ -1,0 +1,29 @@
+Airport Director,
+
+  We have completed the airport simulator and ran the simulation. In our
+
+simulation for one airfield we assumed that it would take an airplane 5 minutes
+
+to land, 7 minutes to takeoff and would crash after waiting 20 minutes to land.
+
+We simulated a 50% chance of an aircraft arriving and needing to land, and a 40%
+
+chance that an aircraft would be ready to start it’s departure every minute. The
+
+simulation was ran to last 360 minutes, from 6pm to midnight.
+
+  The results show that we need to add at least 3 other airfields. At a total of
+
+four airfields the average landing time is much less than 5 minutes. This is the
+
+maximum time an aircraft can be in the landing queue before crashing, meaning
+
+that with four airfields total there would be room for growth in the number of
+
+flights that can be handled without crashes. This will also allow the airport to
+
+run more efficiently with having a fewer amount of flight delays.
+
+Respectfully,
+
+The Simulation Team.
