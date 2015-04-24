@@ -16,7 +16,17 @@ We worked on the project the thursday the week before turning in the first deliv
 
 Each person implemented the assigned classes and files from the TA.
 
+
 GIT LOG
+
+Brief Description:
+	Each member implemented their assigned section.
+	After implementation, we tested it and reviewed the code as a group.
+	Travis then ran some debugging in order to find some quirks in the
+	code.
+	After the code ran succesfully, Mark wrote the director's document.
+	The group edited the document in areas that may have been necessary.
+	The group updated the Programming Log.
 
 commit 024a29fd1a190b91d287b15c52cea76d8f2e25aa
 Author: Mark Yanaros <mark.yanaros@gmail.com>
