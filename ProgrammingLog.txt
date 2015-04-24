@@ -1,6 +1,402 @@
-The group met up on Thursday, April 2nd, and discussed several ways to approach the project. We outlined the classes, and some possible methods in each.
+The group met up on Thursday, April 2nd, and discussed several ways to approach
+  the project. We outlined the classes, and some possible methods in each.
+
 We created a Github project and split up the classes accordingly.
+
 Pablo set up and implemented the Makefile and StatKeeper class and header.
+
 Travis set up and implemented the Queue and BoolSource class and header.
-Mark set up and implemented the Airplane and Runway class and header, also constructed the skeleton for airsim.
+
+Mark set up and implemented the Airplane and Runway class and header, also
+  constructed the skeleton for airsim.
+
 Each member reviewed other's code and revised if necessary.
+
+We worked on the project the thursday the week before turning in the first deliverable.
+
+Each person implemented the assigned classes and files from the TA.
+
+
+GIT LOG
+
+Brief Description:
+	Each member implemented their assigned section.
+	After implementation, we tested it and reviewed the code as a group.
+	Travis then ran some debugging in order to find some quirks in the
+	code.
+	After the code ran succesfully, Mark wrote the director's document.
+	The group edited the document in areas that may have been necessary.
+	The group updated the Programming Log.
+
+commit 024a29fd1a190b91d287b15c52cea76d8f2e25aa
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Thu Apr 23 20:53:19 2015 -0500
+
+    my added director report
+
+commit 4cae2b01957a5e523b80e6d9033950860f35f62e
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Thu Apr 23 20:34:05 2015 -0500
+
+    my updated test script to show simulation representing running with 4 airfields
+
+commit 915806604dad27eacabfb05b4da818a75a7184cd
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Thu Apr 23 19:56:08 2015 -0500
+
+    my added test script
+
+commit b16061a4e6f030591484dfb82cc47be4a0382e5f
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Thu Apr 23 19:12:45 2015 -0500
+
+    BoolSource: bugfix - UINT_MAX -> RAND_MAX
+
+commit d0c7a0cf9d82089ca85335eb75a60daa442801d7
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 16:49:13 2015 -0500
+
+    airsim: cosmetic cleanup of usage message
+
+commit 36b0a8eeea483714ff4d6d32b0d5ed30fb1f5281
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 16:33:43 2015 -0500
+
+    Fixed TODOs involving BoolSource
+
+commit 09cba1c13af21a055022deb0773eb5418cdd100c
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 16:16:25 2015 -0500
+
+    Cosmetic and documentation cleanups across the board.
+
+commit 3479561d37aeefda8b84285ae32d3a42fe723e94
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 16:04:43 2015 -0500
+
+    StatTracker: added tracking of planes remaining in queue at simulation end.
+
+    Also added tracking of total number of landing requests, takeoff requests,
+    and thus total planes. Mostly this just helps verify that StatTracker
+    is keeping an accurate count since
+        landings + takeoffs + crashes + pending landings + pending takeoffs
+    should equal
+        landing requests + takeoff requests = total planes
+
+commit ddddbde84175a983e738139a859d6c6176629a87
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 15:19:26 2015 -0500
+
+    Cosmetic changes and 1 bugfix to takeoff handling.
+
+    Renamed a bunch of variables and functions to make things more readable.
+    Added verbose usage output. Found a bug with the takeoff handling. Planes
+    were able to takeoff on the same tick that another plane got scheduled to
+    land.
+
+commit 8b70fdf8ce9d7e5bff1c7d53c3dac803f9e5e8a6
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 14:38:01 2015 -0500
+
+    Airplane: added printDebug() and lifeSpan().
+
+    Made accessors and mutators private since they aren't needed outside the
+    class with the addition of lifeSpan();
+
+commit 92c8fb5b66186becc8fa7e99fe256f385b80887b
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 14:13:46 2015 -0500
+
+    Made accessors & mutators private
+
+commit 43746bc9968b0f4179bfada1549742eec56a8d78
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 13:58:56 2015 -0500
+
+    Added increment functions. Made raw accessors and mutators private.
+
+    With the addition of increment functions, there is no need for anything
+    outside of the class to access or mutate the internal state of
+    StatKeeper directly.
+
+commit 8d88f838e031d2fb2ee33492ecbd15afe9e5e8c5
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 13:20:45 2015 -0500
+
+    Removing bogus (already done) TODO comments.
+
+commit d7156c0135bc4d0f81a3b07818319f5fb8841120
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 13:18:01 2015 -0500
+
+    Forcing member functions to use mutators instead of direct access to member vars.
+
+commit 77bf20896f8939dc9c6fb22f030015c8a460ee2b
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 13:00:55 2015 -0500
+
+    Renaming functions in StatKeeper to be more accurate and less verbose.
+
+commit e46d4fd4f350663ef50681808e7222e2a5f22498
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 12:50:42 2015 -0500
+
+    Bug fixing, debug output. It appears everything is working now.
+
+commit f8beb50209298282786c62417d381c813190d54c
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 11:42:33 2015 -0500
+
+    Expanding tabs to spaces (I know, I know; I'm pedantic)
+
+commit 628d10309eff91f4ecd21651bc9d93efd4acc0cd
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Wed Apr 22 11:22:26 2015 -0500
+
+    airsim.cpp changes from group session on 4/21
+
+commit 9d73251d75d4cc7e675abfd9918420ee7c0a7bcc
+Merge: 236b749 dbd4368
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Tue Apr 21 20:13:19 2015 -0500
+
+    Merge pull request #9 from myanaros/pabloSection
+
+    Pablo section
+
+commit dbd436818c829e6aea9d3237b1a115f4fe8b0a31
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Tue Apr 21 19:47:24 2015 -0500
+
+    my merging additional conflicts in airsim
+
+commit 173f52d71aefacd7241c3527a27124bf8a664c02
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Tue Apr 21 19:46:18 2015 -0500
+
+    my merging airsim versions
+
+commit 236b7495eb96492e08f9566ff6e3fc12387d4a92
+Merge: be8a5e1 9d30500
+Author: tmillican <travisjmillican@gmail.com>
+Date:   Tue Apr 21 20:04:51 2015 -0500
+
+    Merge pull request #8 from myanaros/travisSection
+
+    Implemented Runway class. Added cur_time argument to Runway constructor.
+
+commit 9d3050093f00cda3a3a59be16fa88f4c04080755
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Mon Apr 20 11:17:30 2015 -0500
+
+    Implemented Runway class. Added cur_time argument to Runway constructor.
+
+commit be8a5e175a970feed119484d8cc99a28ba4d9da7
+Merge: 8357263 c14fb90
+Author: Pulvel <pcv140030@utdallas.edu>
+Date:   Fri Apr 17 16:30:47 2015 -0500
+
+    Merge pull request #7 from myanaros/markSection
+
+    Mark section
+
+commit c14fb90ccdbb9f4bee2c1387a296a4581376ed06
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 17 12:39:18 2015 -0500
+
+    my formatted output from statkeeper
+
+commit 0ee6e6db22221c7aa97a733f6c33c646cf37a554
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 17 12:27:56 2015 -0500
+
+    my implemented additional methods in boolsource and statkeeper. added srand to main.
+
+commit 83572638bd910eb74f12e5f860eafa2b6dc654b6
+Author: Pablo Velasco <pcv140030@cslinux1.utdallas.edu>
+Date:   Sun Apr 5 20:05:33 2015 -0500
+
+    Set up a group log to turn in so we will not have differences. Can be edited if needed
+
+commit a258e25037ecda382e9026fb988e85dc8d5b336b
+Merge: 3324045 7054142
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Sun Apr 5 19:32:09 2015 -0500
+
+    Merge pull request #6 from myanaros/deliv1
+
+    Deliv1 looks good to me.
+
+commit 70541427a7a85c89480f34ff2ade23936f131b70
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 18:52:33 2015 -0500
+
+    remove .vimrc (no longer needed)
+
+commit c8fab093a8c59ba05f333b59e381a99d3855e900
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 18:14:09 2015 -0500
+
+    constructor/destructor, naming convention, const correctness, added printStats()
+
+commit 2640b8d4bd1d7f7767ab6ee2bf5f7e601c9ea087
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 17:56:00 2015 -0500
+
+    standardized names, constructor/destructor, missing args
+
+commit 7d7817f4e339bc279a64f3d1423da718217d49b7
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 17:46:09 2015 -0500
+
+    const correctness, constructor/destructor, changed probability_ from int->float
+
+commit 7db017adbb0447827a62566c626f7c04c25629c8
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 17:41:10 2015 -0500
+
+    constructor/destructor, standardized names, missing args
+
+commit a4ed716415a5a95d873f1d3781201faf79c71eaa
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 17:30:52 2015 -0500
+
+    Standardizing flag names, misc optimizations
+
+commit 3324045d3aef4b241d386dd54c5fdf26b0004507
+Merge: 2900d84 6f3730c
+Author: tmillican <travisjmillican@gmail.com>
+Date:   Sun Apr 5 17:18:57 2015 -0500
+
+    Merge pull request #5 from myanaros/implementBoolSourceandQueue
+
+    Implement bool sourceand queue
+
+commit 6f3730ca484f10b318f801dc48137c1e7b9e2e73
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sat Apr 4 14:03:47 2015 -0500
+
+    replaced Airplane.h inclusion with forward declaration
+
+commit a310892d794820d51206d87c15b24b552dbf8931
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sat Apr 4 13:58:14 2015 -0500
+
+    Forgot to include Airplane.h
+
+commit 06a0b7698f7b38a4ea66cc3e667e03d7c053ad88
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Sat Apr 4 11:03:33 2015 -0500
+
+    Implemented Queue
+
+commit 2900d84e7c6a0c453068a324af866422dfab7809
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 20:48:46 2015 -0500
+
+    my prototyped and partially implemented BoolSource.
+
+commit b2c93a03c448f4f06d2de6ef788e4def94e4f43c
+Merge: dc7ed89 37e4f5b
+Author: Pulvel <pcv140030@utdallas.edu>
+Date:   Fri Apr 3 20:21:16 2015 -0500
+
+    Merge pull request #4 from myanaros/implementAirplane
+
+    Implement Airplane
+
+commit 37e4f5b9554135740e3296c355b5539f2267db8a
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 20:16:41 2015 -0500
+
+    my added comments.
+
+commit 129cad2fd3e126258c8e383694e9c405d124b467
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 18:47:24 2015 -0500
+
+    my implemented airplane prototypes, fixed airsim and makefile.
+
+commit dc7ed897a21c2a1458b7f7e5abaf0db9cdec78d8
+Merge: 2017964 277ae4a
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 20:02:54 2015 -0500
+
+    Merge pull request #3 from myanaros/StatKeeper
+
+    Stat keeper looks good to me now, merging.
+
+commit 277ae4a0c0d161d946c1bb458d27b55ee53f18f3
+Author: Pablo Velasco <pcv140030@cslinux1.utdallas.edu>
+Date:   Fri Apr 3 20:00:59 2015 -0500
+
+    Correct return types
+
+commit b77a04db797e1f0c2cbfda474942c02aa8bd4ecb
+Author: Pablo Velasco <pcv140030@cslinux1.utdallas.edu>
+Date:   Fri Apr 3 19:45:30 2015 -0500
+
+    Now compiles correctly
+
+commit ab1b4f1a2765dd35875897337015e2dced1f2099
+Author: Pablo Velasco <pcv140030@cslinux1.utdallas.edu>
+Date:   Fri Apr 3 19:30:08 2015 -0500
+
+    StatKeeper
+
+commit 201796477368d2dd18da4f84a7bbbdb0c7796b34
+Author: Pulvel <Pcv140030@utdallas.edu>
+Date:   Fri Apr 3 17:25:50 2015 -0500
+
+    Pablo changed the Makefile
+
+commit 852e44dfcf1efc339e10c622eab2867d2db60b80
+Merge: ff463dc f55e058
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 16:22:20 2015 -0500
+
+    Merge branch 'implementingRunway'
+
+    Adding Runway class prototyping and empty methods.
+
+commit f55e058f0d5a41b055c141e32909155f07953347
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 15:30:51 2015 -0500
+
+    my updated design-doc to represent my changes to accessor method names.
+
+commit 45fe42c4f3f4da512954edbf45cb5c9b1e50fbff
+Author: Mark Yanaros <mark.yanaros@gmail.com>
+Date:   Fri Apr 3 15:18:45 2015 -0500
+
+    my added prototypes and incomplete implementations of methods.
+
+commit ff463dc6d403010bebde42257028b74bf857555a
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Fri Apr 3 13:55:34 2015 -0500
+
+    Typo in design doc
+
+commit 2bb3862b896245b6a8a35e1fbdf2a614d7c45913
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Fri Apr 3 13:52:39 2015 -0500
+
+    Added design doc and vim settings
+
+commit 1bcb1db7579329eec0ccf8bc6670678e8c961c25
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Fri Apr 3 12:52:23 2015 -0500
+
+    Adding class skeletons
+
+commit 91dc11a156a821966041603c997c614a25235f0a
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Fri Apr 3 12:32:52 2015 -0500
+
+    adding include guards
+
+commit 7ab368f1f34dd292ac7ddc9422a2d3aa20fe6d1d
+Author: Travis Millican <travisjmillican@gmail.com>
+Date:   Fri Apr 3 12:14:21 2015 -0500
+
+    initial commit

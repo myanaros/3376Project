@@ -4,20 +4,23 @@
 class BoolSource {
     private:
         float probability_;
+        static bool is_seeded_;
+
+        // Private Accessors
+        float probability();
+        bool is_seeded();
+
+        // Private Mutators
+        void set_probability(const float probability);
+        void set_is_seeded(const bool is_seeded);
 
     public:
         // Constructors/Destructors
         BoolSource(const float probability);
         ~BoolSource() {};
 
-        // Accessors
-        float probability();
-
-        // Mutators
-        void set_probability(const float probability);
-
         // Other
-        bool shouldAddToQueue();
+        bool decide();
 };
 
 #endif

@@ -1,11 +1,18 @@
 // Standard library includes
+#include <iostream>
+#include <climits>
+#include <cstdlib>
 
 // Project includes
 #include "BoolSource.h"
-#include <iostream>
-#include <stdlib.h>
 
 using namespace std;
+
+// ---------------------------------------------------------------------
+// Static vars
+// ---------------------------------------------------------------------
+
+bool BoolSource::is_seeded_ = false;
 
 // ---------------------------------------------------------------------
 // Constructors / Destructors
@@ -13,6 +20,10 @@ using namespace std;
 
 BoolSource::BoolSource(const float probability) {
     set_probability(probability);
+    if (!is_seeded()) {
+        srand(time(NULL));
+        set_is_seeded(true);
+    }
 }
 
 // ---------------------------------------------------------------------
@@ -25,6 +36,11 @@ float BoolSource::probability()
     return probability_;
 }
 
+// return is_seeded_
+bool BoolSource::is_seeded() {
+    return is_seeded_;
+}
+
 // ---------------------------------------------------------------------
 // Mutators
 // ---------------------------------------------------------------------
@@ -35,22 +51,22 @@ void BoolSource::set_probability(const float probability)
     probability_ = probability;
 }
 
+// set is_seeded_
+void BoolSource::set_is_seeded(const bool is_seeded) {
+    is_seeded_ = is_seeded;
+}
 // ---------------------------------------------------------------------
 // Other Member Functions
 // ---------------------------------------------------------------------
 
-// If the random value is less than the probability than
-// a plane should be added to it's respective queue
-bool BoolSource::shouldAddToQueue()
+// returns true with odds according to probability
+bool BoolSource::decide()
 {
-    bool shouldAdd = (rand() % 100) < probability_ * 100;
-
-    if(shouldAdd)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    float randNormal = (float)rand() / (float)RAND_MAX;
+    // if a random normalized value between 0 and 1 is less
+    // than our probability threshold, return true;
+    // Ex. probability = 0.10:
+    //      a true random normalized value will be less than 0.10
+    //      exactly 10% of the time.
+    return randNormal < probability();
 }

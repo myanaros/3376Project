@@ -1,4 +1,7 @@
 // Standard library includes
+#ifdef DEBUG
+#include <iostream>
+#endif
 
 // Project includes
 #include "Airplane.h"
@@ -53,3 +56,34 @@ bool Airplane::hasCrashed(const int cur_time)
 {
     return cur_time < crash_time();
 }
+
+// returns the duration the plane has existed
+int Airplane::lifeSpan(const int cur_time) {
+    return start_time() - cur_time;
+}
+
+#ifdef DEBUG
+void Airplane::printDebug(const int cur_time, const planeDebugType dtype) {
+    std::cout << "[" << cur_time << "]";
+    switch (dtype) {
+    case DBG_LREQ:   
+        std::cout << " new landing req: will crash @" << crash_time();
+        break;
+    case DBG_TREQ:   
+        std::cout << " new takeoff req";
+        break;
+    case DBG_LAND:
+        std::cout << " landed plane: entered @" << start_time()
+            << ", would crash @" << crash_time();
+        break;
+    case DBG_TOFF:
+        std::cout << " plane takeoff: entered @" << start_time();
+        break;
+    case DBG_CRASH:
+        std::cout << " found crashed plane: entered @" << start_time()
+            << ", crashed @" << crash_time();
+        break;
+    }
+    std::cout << std::endl;
+}
+#endif

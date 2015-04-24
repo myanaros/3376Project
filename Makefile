@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall -Werror
 # Comment out for release build
-DEBUG=-g -DDEBUG
+#DEBUG=-g -DDEBUG
 
 BINARY=airsim
 SOURCES=airsim.cpp Airplane.cpp BoolSource.cpp Queue.cpp Runway.cpp StatKeeper.cpp
