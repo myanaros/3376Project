@@ -62,7 +62,7 @@ void BoolSource::set_is_seeded(const bool is_seeded) {
 // returns true with odds according to probability
 bool BoolSource::decide()
 {
-    float randNormal = (float)rand() / (float)UINT_MAX;
+    float randNormal = (float)rand() / (float)RAND_MAX;
     // if a random normalized value between 0 and 1 is less
     // than our probability threshold, return true;
     // Ex. probability = 0.10:
